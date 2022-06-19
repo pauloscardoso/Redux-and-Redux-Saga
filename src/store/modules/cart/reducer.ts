@@ -1,13 +1,13 @@
 //criando estados menores
 //Este seria um estado isolado de um carrinho de compras (um Reducer)
-
 import { Reducer } from "redux";
-import { ICartState } from "./types";
+import { ActionTypes, ICartState } from "./types";
 import produce from "immer";
 
 //Valor inicial do Estado (Reducer)
 const INITIAL_STATE: ICartState = {
   items: [],
+  failedStockCheck: [],
 };
 
 //Declaração inicial
@@ -15,7 +15,7 @@ export const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
   //Produce cria um rascunho q tem o mesmo formato do estado. No fim, ele compara o rascunho com o state e faz as alterações de forma automatica
   return produce(state, (draft) => {
     switch (action.type) {
-      case "ADD_PRODUCT_TO_CART": {
+      case "ADD_PRODUCT_TO_CART_SUCCESS": {
         const { product } = action.payload;
 
         //verificar se o item a ser adicionado no carrinho já está no carrinho
@@ -31,6 +31,11 @@ export const cart: Reducer<ICartState> = (state = INITIAL_STATE, action) => {
             quantity: 1,
           });
         }
+
+        break;
+      }
+      case ActionTypes.addProductToCartFailure: {
+        draft.failedStockCheck.push(action.payload.productId);
 
         break;
       }

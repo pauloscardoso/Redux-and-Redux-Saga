@@ -1,3 +1,9 @@
+export enum ActionTypes {
+  addProductToCartRequest = "ADD_PRODUCT_TO_CART_REQUEST",
+  addProductToCartSuccess = "ADD_PRODUCT_TO_CART_SUCCESS",
+  addProductToCartFailure = "ADD_PRODUCT_TO_CART_FAILURE",
+}
+
 //Formato dos dados que estarão dentro do Reducer
 export interface IProduct {
   id: number;
@@ -12,4 +18,5 @@ export interface ICartItem {
 
 export interface ICartState {
   items: ICartItem[];
+  failedStockCheck: number[];
 }
